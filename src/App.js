@@ -1,69 +1,66 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Expensetracker from "./components/Expensetracker";
+import Expense from "./components/data";
 
 function App() {
+  let total = 0;
   return (
     <>
       <div
         style={{
-          width: "100%",
+          textAlign: "center",
+          width: "250px",
+          margin: "auto",
         }}
       >
+        <h3>Expense Tracker</h3>
+
         <div
           style={{
-            width: "250px",
-            margin: "auto",
-            textAlign: "center",
+            width: "100%",
           }}
         >
-          <h3>Expense Tracker</h3>
+          {Expense.map((item, i) => {
+            return (
+              <div
+                onClick={(event) => {
+                  alert("You clicked " + item.name + " - Php " + item.price);
+                }}
+              >
+                <button
+                  style={{
+                    backgroundColor: "#00b4d8",
+                    outline: "none",
+                    height: "80px",
+                    width: "250px",
+                    borderRadius: "25px",
+                    padding: "10px",
+                    textAlign: "left",
+                    marginBottom: "15px",
+                  }}
+                  key={i}
+                >
+                  <h2 style={{ fontSize: "15px" }}>{item.name}</h2>
 
-          <Expensetracker
-            name="Video Games"
-            value={1000}
-          ></Expensetracker>
-          <Expensetracker
-            name="Online Shopping"
-            value={2000}
-          ></Expensetracker>
-          <Expensetracker
-            name="Gym"
-            value={800}
-          ></Expensetracker>
-          <Expensetracker
-            name="Spotify"
-            value={125}
-          ></Expensetracker>
-          <Expensetracker
-            name="Car Maintenance"
-            value={5000}
-          ></Expensetracker>
-          <Expensetracker
-            name="Grocery"
-            value={10000}
-          ></Expensetracker>
-          <Expensetracker
-            name="Rent"
-            value={5000}
-          ></Expensetracker>
-          <Expensetracker
-            name="Travel"
-            value={500}
-          ></Expensetracker>
-          <Expensetracker
-            name="Insurance"
-            value={1800}
-          ></Expensetracker>
-          <Expensetracker
-            name="Emergency"
-            value={1000}
-          ></Expensetracker>
-
-          <h4 style={{}}>
-            Total : <label style={{ fontWeight: "normal" }}>27225</label>
-          </h4>
+                  <h3
+                    style={{
+                      marginLeft: "80%",
+                    }}
+                  >
+                    {item.price}
+                  </h3>
+                </button>
+              </div>
+            );
+          })}
         </div>
+
+        <h4 style={{}}>
+          Total :
+          {Expense.map((sum) => {
+            total += sum.price;
+          })}
+          <label style={{ fontWeight: "normal" }}>{total}</label>
+        </h4>
       </div>
     </>
   );
