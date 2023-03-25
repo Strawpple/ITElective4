@@ -1,68 +1,60 @@
 import "./App.css";
-import Expense from "./components/data";
+import { useState, useEffect } from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+// import Expense from "./components/data";
 
 function App() {
-  let total = 0;
+  // let total = 0;
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((res) => res.json())
+      .then((data) => setPosts(data))
+      .catch((error) => console.log("error in fetching"));
+  }, []);
+
   return (
-    <>
-      <div
-        style={{
-          textAlign: "center",
-          width: "250px",
-          margin: "auto",
-        }}
-      >
-        <h3>Expense Tracker</h3>
+    <div 
+      className="App"
+      style={{ textAlign: "center", width: "500px", margin: "auto" }}
+    >
+      {posts.map((post) => (
+        <Card onClick={(event) => {
+          alert("You clicked " + post.title);
+        }} sx={{ minWidth: 275 }}>
+          <CardContent>
+            <Typography
+              variant="h5"
+              component="div"
+            >
+              {post.title}
+            </Typography>
 
-        <div
-          style={{
-            width: "100%",
-          }}
-        >
-          {Expense.map((item, i) => {
-            return (
-              <div
-                onClick={(event) => {
-                  alert("You clicked " + item.name + " - Php " + item.price);
-                }}
-              >
-                <button
-                  style={{
-                    backgroundColor: "#00b4d8",
-                    outline: "none",
-                    height: "80px",
-                    width: "250px",
-                    borderRadius: "25px",
-                    padding: "10px",
-                    textAlign: "left",
-                    marginBottom: "15px",
-                  }}
-                  key={i}
-                >
-                  <h2 style={{ fontSize: "15px" }}>{item.name}</h2>
-
-                  <h3
-                    style={{
-                      marginLeft: "80%",
-                    }}
-                  >
-                    {item.price}
-                  </h3>
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        <h4 style={{}}>
-          Total :
-          {Expense.map((sum) => {
-            total += sum.price;
-          })}
-          <label style={{ fontWeight: "normal" }}>{total}</label>
-        </h4>
-      </div>
-    </>
+            <Typography
+              sx={{ mb: 1.5 }}
+              color="text.secondary"
+            >
+              {post.body}
+            </Typography>
+            {/* <Typography variant="body2">
+              well meaning and kindly.
+              <br />
+              {'"a benevolent smile"'}
+            </Typography> */}
+          </CardContent>
+          <CardActions>
+            <Button size="small">View Details</Button>
+          </CardActions>
+          
+        </Card>
+      ))}
+    </div>
   );
 }
 
